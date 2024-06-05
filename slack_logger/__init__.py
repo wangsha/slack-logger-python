@@ -139,7 +139,7 @@ class MessageDesign(ABC):
 @define
 class NoDesign(MessageDesign):
     def format_blocks(self, record: LogRecord) -> Sequence[Block | None]:
-        return [SectionBlock(text=PlainTextObject(text=record.getMessage()))]
+        return [SectionBlock(text=PlainTextObject(text=record.getMessage()[0:2999]))]
 
 
 @define
@@ -148,7 +148,7 @@ class MinimalDesign(MessageDesign):
 
     def format_blocks(self, record: LogRecord) -> Sequence[Block | None]:
         level = record.levelname
-        message = record.getMessage()
+        message = record.getMessage()[0:2999]
         icon = self.config.emojis.get(record.levelno)
 
         header: HeaderBlock = self.construct_header(record=record, config=self.config, icon=icon, level=level)
@@ -168,7 +168,7 @@ class RichDesign(MessageDesign):
 
     def format_blocks(self, record: LogRecord) -> Sequence[Block | None]:
         level = record.levelname
-        message = record.getMessage()
+        message = record.getMessage()[0:2999]
         icon = self.config.emojis.get(record.levelno)
 
         env: str | None = self.get_env(config=self.config, record=record)
