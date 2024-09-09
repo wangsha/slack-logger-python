@@ -132,6 +132,7 @@ class MessageDesign(ABC):
         maybe_blocks: Sequence[Block | None] = self.format_blocks(record=record)
         blocks: Sequence[Block] = [b for b in maybe_blocks if b is not None]
         str_blocks: str = json.dumps([block.to_dict() for block in blocks])
+        str_blocks = str_blocks[0:2900]
         log.debug("str_blocks: %s", str_blocks)
         return str_blocks
 
